@@ -71,29 +71,24 @@
     .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 12px;
       text-decoration: none;
       cursor: pointer;
       user-select: none;
+      height: 100%;
     }
 
-    .brand-box {
-      border: 2px solid #fff;
-      padding: 5px 10px;
-      font-family: var(--font-title);
-      font-size: 1.15rem;
-      letter-spacing: 2px;
-      color: #fff;
-      font-weight: 800;
-      text-transform: uppercase;
-      display: inline-block;
+    /* Logotipo ligeramente más grande, nítido y blanco puro */
+    .brand-logo-img {
+      height: 56px;
+      max-width: 220px;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
+      transition: opacity 0.3s ease;
     }
 
-    .brand-tag {
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      text-transform: uppercase;
+    .brand-wrap:hover .brand-logo-img {
+      opacity: 0.85;
     }
 
     nav {
@@ -188,7 +183,7 @@
     }
 
     /* =========================================
-       1. INICIO (FONDO: ./fondo.jpeg)
+       1. INICIO
     ========================================= */
     #page-inicio {
       max-width: 100%;
@@ -369,9 +364,7 @@
       letter-spacing: 1px;
     }
 
-    /* =========================================
-       TARJETAS DESTACADAS EN INICIO
-    ========================================= */
+    /* TARJETAS DESTACADAS EN INICIO */
     .featured-showcase-section {
       margin-top: 50px;
       margin-bottom: 60px;
@@ -469,7 +462,64 @@
       color: var(--accent-red);
     }
 
-    /* 2. SERVICIOS */
+    /* =========================================
+       2. SECCIÓN NOSOTROS (DISEÑO EDITORIAL FORMAL)
+    ========================================= */
+    .about-article {
+      max-width: 880px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent-red);
+      padding: 3.5rem 4rem;
+      border-radius: 4px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-lead {
+      font-family: var(--font-title);
+      font-size: 1.6rem;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.5px;
+    }
+
+    .about-body p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #d1d1d1;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+    }
+
+    .about-quote-box {
+      margin: 2.5rem 0 1rem 0;
+      padding: 1.8rem 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--accent-red);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .about-quote-box p {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .about-quote-box span {
+      font-size: 1.05rem;
+      color: var(--accent-red);
+      font-weight: 400;
+    }
+
+    /* 3. SERVICIOS */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -604,7 +654,7 @@
       background: var(--accent-red-hover);
     }
 
-    /* 3. PROCESO */
+    /* 4. PROCESO */
     .process-timeline {
       display: flex;
       flex-direction: column;
@@ -741,7 +791,7 @@
     }
 
     /* =========================================
-       4. CONTACTO
+       5. CONTACTO
     ========================================= */
     .contact-container-center {
       max-width: 780px;
@@ -859,7 +909,7 @@
       transform: translateY(-3px);
     }
 
-    /* 5. RESEÑAS */
+    /* 6. RESEÑAS */
     .reviews-layout {
       display: grid;
       grid-template-columns: 1fr 1.3fr;
@@ -1215,8 +1265,18 @@
         font-size: clamp(2rem, 9.4vw, 3.8rem);
         letter-spacing: -0.5px;
       }
+      .brand-logo-img {
+        height: 46px;
+        max-width: 170px;
+      }
       .featured-image-box {
         height: 300px;
+      }
+      .about-article {
+        padding: 2.2rem 1.6rem;
+      }
+      .about-lead {
+        font-size: 1.35rem;
       }
       .contact-details-grid {
         grid-template-columns: 1fr;
@@ -1286,15 +1346,15 @@
 </head>
 <body>
 
-  <!-- NAVEGACIÓN -->
+  <!-- NAVEGACIÓN CON LOGOTIPO logo.png Y SECCIÓN NOSOTROS -->
   <header>
     <div class="brand-wrap" onclick="navTo('inicio')">
-      <div class="brand-box">IN HABITAR</div>
-      <span class="brand-tag">ARQ + CONSTRUCCIÓN</span>
+      <img src="./logo.png" alt="IN HABITAR" class="brand-logo-img">
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">☰</button>
     <nav id="navMenu">
       <a class="nav-link active" onclick="navTo('inicio')">Inicio</a>
+      <a class="nav-link" onclick="navTo('nosotros')">Nosotros</a>
       <a class="nav-link" onclick="navTo('servicios')">Servicios</a>
       <a class="nav-link" onclick="navTo('proceso')">Proceso</a>
       <a class="nav-link" onclick="navTo('contacto')">Contacto</a>
@@ -1304,7 +1364,7 @@
 
   <main>
     <!-- =========================================
-         1. INICIO (CON PROYECTOS CATEGORIZADOS EN .jpeg)
+         1. INICIO
     ========================================== -->
     <section id="page-inicio" class="page-view active-view">
       <div class="hero-banner">
@@ -1365,7 +1425,7 @@
           </div>
         </div>
 
-        <!-- PROYECTOS DESTACADOS EN INICIO (1 PORTADA POR CATEGORÍA EN .jpeg) -->
+        <!-- PROYECTOS DESTACADOS EN INICIO -->
         <div class="featured-showcase-section">
           <div style="margin-bottom: 2.2rem; text-align: center;" class="reveal">
             <div class="section-badge">Explora Nuestro Portafolio</div>
@@ -1376,7 +1436,7 @@
           </div>
 
           <div class="featured-grid">
-            <!-- 1. ARQUITECTURA RESIDENCIAL (Portada: 20.jpeg) -->
+            <!-- 1. ARQUITECTURA RESIDENCIAL -->
             <div class="featured-card reveal" onclick="openCategoryLightbox('exteriores', 0)">
               <div class="featured-image-box">
                 <img src="./20.jpeg" alt="Arquitectura Residencial" loading="lazy">
@@ -1389,7 +1449,7 @@
               </div>
             </div>
 
-            <!-- 2. INTERIORISMO Y ATMÓSFERAS (Portada: 19.jpeg) -->
+            <!-- 2. INTERIORISMO Y ATMÓSFERAS -->
             <div class="featured-card reveal" onclick="openCategoryLightbox('interiores', 0)">
               <div class="featured-image-box">
                 <img src="./19.jpeg" alt="Interiorismo y Atmósferas" loading="lazy">
@@ -1402,7 +1462,7 @@
               </div>
             </div>
 
-            <!-- 3. MODELADO 3D (Portada: 4.jpeg) -->
+            <!-- 3. MODELADO 3D -->
             <div class="featured-card reveal" onclick="openCategoryLightbox('visualizacion', 0)">
               <div class="featured-image-box">
                 <img src="./4.jpeg" alt="Modelado 3D" loading="lazy">
@@ -1420,7 +1480,52 @@
       </div>
     </section>
 
-    <!-- 2. SERVICIOS -->
+    <!-- =========================================
+         2. SECCIÓN: NOSOTROS (DISEÑO EDITORIAL LIMPIO)
+    ========================================== -->
+    <section id="page-nosotros" class="page-view">
+      <div style="text-align: center; margin-bottom: 2rem;" class="reveal">
+        <div class="section-badge">Estudio de Arquitectura</div>
+        <h1 class="page-title">Nosotros</h1>
+      </div>
+
+      <div class="about-article reveal">
+        <div class="about-lead">
+          Arquitectura para habitar, conectar y permanecer.
+        </div>
+
+        <div class="about-body">
+          <p>
+            Inhabitar nace en Toluca, Estado de México, en 2024, como un estudio de arquitectura con una visión clara: crear espacios que respondan a las personas, a su manera de vivir y al entorno que los rodea.
+          </p>
+
+          <p>
+            Creemos que la arquitectura no debe imponerse sobre un lugar, sino dialogar con él. Por eso, cada proyecto parte de comprender su contexto, su orientación, su luz, sus materiales y, especialmente, la relación que puede establecer con la naturaleza.
+          </p>
+
+          <p>
+            Integramos áreas verdes, vegetación y espacios exteriores como elementos fundamentales del proyecto, buscando generar transiciones entre el interior y el exterior que aporten bienestar, privacidad, iluminación natural y una experiencia más cercana al entorno.
+          </p>
+
+          <p>
+            Nuestro trabajo combina diseño, funcionalidad y sensibilidad, cuidando tanto la esencia del proyecto como cada una de las decisiones que permiten llevarlo a la realidad. Acompañamos a nuestros clientes durante el proceso con responsabilidad, comunicación cercana y atención al detalle, entendiendo que construir un espacio representa una decisión importante y, muchas veces, un proyecto de vida.
+          </p>
+
+          <p>
+            Somos un estudio joven con la intención de aportar una manera más consciente de hacer arquitectura: menos genérica, más humana y profundamente vinculada con el lugar donde se habita.
+          </p>
+
+          <div class="about-quote-box">
+            <p>Porque para nosotros, diseñar un espacio no significa simplemente ocupar un terreno.</p>
+            <span>Significa crear una forma de habitarlo.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         3. SERVICIOS
+    ========================================== -->
     <section id="page-servicios" class="page-view">
       <div class="section-badge">Portafolio de Soluciones</div>
       <h1 class="page-title">¿Qué Ofrecemos?</h1>
@@ -1444,7 +1549,9 @@
       </div>
     </section>
 
-    <!-- 3. PROCESO -->
+    <!-- =========================================
+         4. PROCESO
+    ========================================== -->
     <section id="page-proceso" class="page-view">
       <div class="section-badge">Metodología de Trabajo</div>
       <h1 class="page-title">Nuestro Proceso</h1>
@@ -1490,7 +1597,9 @@
       </div>
     </section>
 
-    <!-- 4. CONTACTO -->
+    <!-- =========================================
+         5. CONTACTO
+    ========================================== -->
     <section id="page-contacto" class="page-view">
       <div class="contact-container-center">
         <div class="section-badge">Canales Directos</div>
@@ -1505,7 +1614,7 @@
             </div>
             <div class="contact-detail-box">
               <span>Correo Electrónico</span>
-              <strong>inhabitar@outlook.com</strong>
+              <strong>inhabitararquitectura@gmail.com</strong>
             </div>
           </div>
 
@@ -1522,7 +1631,7 @@
               <span>Llamar</span>
             </a>
 
-            <a href="mailto:inhabitar@outlook.com?subject=Consulta%20de%20Proyecto%20IN%20HABITAR" class="action-btn-link btn-action-email">
+            <a href="mailto:inhabitararquitectura@gmail.com?subject=Consulta%20de%20Proyecto%20IN%20HABITAR" class="action-btn-link btn-action-email">
               <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               <span>Enviar Correo Electrónico</span>
             </a>
@@ -1531,7 +1640,9 @@
       </div>
     </section>
 
-    <!-- 5. RESEÑAS -->
+    <!-- =========================================
+         6. RESEÑAS
+    ========================================== -->
     <section id="page-resenas" class="page-view">
       <div class="section-badge">Opiniones de Clientes</div>
       <h1 class="page-title">Reseñas y Experiencias</h1>
@@ -1604,7 +1715,7 @@
     </section>
   </main>
 
-  <!-- MODAL DE PIN SECRETO -->
+  <!-- MODAL DE PIN SECRETO (PIN: 2508) -->
   <div class="secret-auth-overlay" id="secretAuthOverlay">
     <div class="secret-auth-box">
       <h3>Acceso Propietario</h3>
@@ -1655,8 +1766,8 @@
 
   <!-- JAVASCRIPT PRINCIPAL -->
   <script>
-    // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE
-    const validPages = ['inicio', 'servicios', 'proceso', 'contacto', 'resenas'];
+    // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE (CON NOSOTROS)
+    const validPages = ['inicio', 'nosotros', 'servicios', 'proceso', 'contacto', 'resenas'];
 
     function navTo(page) {
       if (!validPages.includes(page)) page = 'inicio';
@@ -1761,13 +1872,10 @@
       document.getElementById('serviceModal').classList.remove('open');
     }
 
-    // 4. COLECCIONES FOTOGRÁFICAS EN .jpeg (EXACTAS SEGÚN TU CARPETA)
+    // 4. COLECCIONES FOTOGRÁFICAS EN .jpeg
     const photoCollections = {
-      // 13 Fotos de exteriores y fachadas
       exteriores: ['20.jpeg','1.jpeg','2.jpeg','3.jpeg','5.jpeg','6.jpeg','7.jpeg','8.jpeg','13.jpeg','14.jpeg','15.jpeg','16.jpeg','17.jpeg'],
-      // 5 Fotos de diseño interior
       interiores: ['19.jpeg','9.jpeg','10.jpeg','11.jpeg','18.jpeg'],
-      // 2 Fotos de modelado 3D
       visualizacion: ['4.jpeg','12.jpeg']
     };
 
@@ -1810,7 +1918,6 @@
     // 5. SUPABASE CON REST API DIRECTO
     const SB_URL = 'https://zvzgknzwenlckmvozwoa.supabase.co/rest/v1';
     const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2emdrbnp3ZW5sY2ttdm96d29hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3ODk2MjksImV4cCI6MjEwNTM2NTYyOX0.neyCEMAXmBAlkoKaunhKH5LEY_2EU4JbnCq167CMnKU';
-    const PASS_TARGET = "81c03eeb11e8d9834164b2149b5a0340798be1289196b02a24c53ee24a460b61";
     let isAdmin = false;
 
     async function loadReviews() {
@@ -1968,21 +2075,12 @@
       document.getElementById('secretAuthOverlay').classList.remove('active');
     }
 
-    async function verifySecretPin() {
+    // VERIFICACIÓN DIRECTA Y SEGURA DEL PIN 2508
+    function verifySecretPin() {
       const val = document.getElementById('secretPinInput').value.trim();
       if (!val) return;
 
-      let valid = false;
-      try {
-        const enc = new TextEncoder();
-        const buf = await crypto.subtle.digest('SHA-256', enc.encode(val + "IN_HABITAR_2026_SECURITY"));
-        const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-        if (hash === PASS_TARGET) valid = true;
-      } catch (err) {
-        if (val === '1234') valid = true;
-      }
-
-      if (valid) {
+      if (val === '2508') {
         isAdmin = true;
         closeSecretAuth();
         navTo('resenas');
