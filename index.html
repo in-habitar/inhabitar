@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IN HABITAR | Arquitectura + Construcción + Diseño</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090909;
+      --bg-card: #121212;
+      --bg-card-hover: #181818;
+      --accent-red: #d32f2f;
+      --accent-red-hover: #b71c1c;
+      --accent-gold: #ffb400;
+      --text-main: #f5f5f5;
+      --text-muted: #a0a0a0;
+      --border: rgba(255, 255, 255, 0.1);
+      --font-title: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Animaciones de aparición suave (Scroll Reveal) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    /* Header y Navegación */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      background: rgba(9, 9, 9, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-box {
+      border: 2px solid #fff;
+      padding: 5px 10px;
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .brand-tag {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.6rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 6px 0;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a.active {
+      color: #fff;
+    }
+
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-red);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* Contenedor principal y vistas */
+    main {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    .page-view {
+      display: none;
+      width: 90%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 50px 0 100px 0;
+    }
+
+    .page-view.active-view {
+      display: block !important;
+    }
+
+    .section-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--accent-red);
+      color: var(--accent-red);
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      max-width: 95%;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 6vw, 4.2rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 680px;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+    }
+
+    /* =========================================
+       1. INICIO (ADAPTADO A MÓVILES SIN CORTES)
+    ========================================= */
+    #page-inicio {
+      max-width: 100%;
+      width: 100%;
+      padding: 0 0 100px 0;
+    }
+
+    .hero-banner {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 5%;
+      background-image: 
+        linear-gradient(180deg, rgba(9, 9, 9, 0.68) 0%, rgba(9, 9, 9, 0.82) 80%, var(--bg-dark) 100%),
+        url('04.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-logo-large {
+      font-family: var(--font-title);
+      /* Tamaño escalable preciso para que no se corte en ningún teléfono */
+      font-size: clamp(2.2rem, 9.4vw, 8.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin: 1rem 0 1.8rem 0;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.85);
+      max-width: 100%;
+      word-break: normal;
+      overflow-wrap: normal;
+      white-space: nowrap;
+    }
+
+    .hero-logo-large span {
+      color: var(--accent-red);
+    }
+
+    .hero-manifesto {
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: #e5e5e5;
+      max-width: 760px;
+      margin: 0 auto 2.5rem auto;
+      line-height: 1.6;
+      font-weight: 300;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+      padding: 0 10px;
+    }
+
+    .btn-contact {
+      display: inline-block;
+      padding: 16px 48px;
+      background-color: var(--accent-red);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-contact:hover {
+      background-color: var(--accent-red-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(211, 47, 47, 0.6);
+    }
+
+    .home-content-container {
+      width: 90%;
+      max-width: 1240px;
+      margin: 40px auto 0;
+    }
+
+    .home-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 50px;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      border-radius: 4px;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--accent-red);
+      transform: translateY(-5px);
+    }
+
+    .pillar-card span {
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent-red);
+      opacity: 0.85;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .pillar-card h3 {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .pillar-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .home-about-strip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--accent-red);
+      padding: 3rem;
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .home-about-strip h2 {
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .home-about-strip p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .home-stats-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-item {
+      border-left: 2px solid var(--border);
+      padding-left: 1.2rem;
+    }
+
+    .stat-item strong {
+      display: block;
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      color: var(--accent-red);
+    }
+
+    .stat-item span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* 2. SERVICIOS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .service-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+    }
+
+    .service-item:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-red);
+      transform: translateY(-4px);
+    }
+
+    .service-arrow {
+      color: var(--accent-red);
+      font-size: 1.3rem;
+      transition: transform 0.3s ease;
+    }
+
+    .service-item:hover .service-arrow {
+      transform: translateX(4px);
+    }
+
+    .service-name {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* Modal Servicios */
+    .service-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .service-modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #141414;
+      border: 1px solid var(--accent-red);
+      width: 100%;
+      max-width: 580px;
+      padding: 2.5rem;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .modal-badge {
+      color: var(--accent-red);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .modal-title {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      color: #fff;
+    }
+
+    .modal-body {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .modal-action {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 14px 20px;
+      background: var(--accent-red);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      border-radius: 3px;
+      transition: background 0.3s ease;
+    }
+
+    .modal-action:hover {
+      background: var(--accent-red-hover);
+    }
+
+    /* 3. PROCESO */
+    .process-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent-red);
+      padding: 1.8rem 2.2rem;
+      border-radius: 0 6px 6px 0;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .step-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateX(8px);
+      border-left-width: 8px;
+    }
+
+    .step-num-title {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+
+    /* 4. GALERÍA */
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .gallery-card {
+      position: relative;
+      height: 280px;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--accent-red);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: brightness(0.92) contrast(1.05);
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(1.05);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+      opacity: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.2rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .overlay-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .overlay-text span {
+      color: var(--accent-red);
+    }
+
+    /* Lightbox */
+    .lightbox-viewer {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 5, 5, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox-viewer.active {
+      display: flex;
+    }
+
+    .lightbox-img-wrapper {
+      position: relative;
+      max-width: 92vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.95);
+      user-select: none;
+    }
+
+    .lightbox-btn-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3010;
+    }
+
+    .lightbox-btn-close:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3010;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    /* =========================================
+       5. CONTACTO (SIN INSTAGRAM Y BOTONES CENTRADOS)
+    ========================================= */
+    .contact-container-center {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .contact-card-main {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 3.5rem;
+      border-radius: 6px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .contact-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .contact-detail-box span {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-detail-box strong {
+      font-size: 1.25rem;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      word-break: break-word;
+    }
+
+    .contact-actions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .action-btn-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 18px 20px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 0.92rem;
+      border-radius: 4px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .action-btn-link svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .action-btn-link span {
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-action-whats {
+      background-color: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(211, 47, 47, 0.35);
+    }
+
+    .btn-action-whats:hover {
+      background-color: var(--accent-red-hover);
+      transform: translateY(-3px);
+    }
+
+    .btn-action-call {
+      background-color: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-action-call:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: #ffffff;
+      transform: translateY(-3px);
+    }
+
+    .btn-action-email {
+      background-color: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-action-email:hover {
+      color: #ffffff;
+      border-color: var(--accent-red);
+      background-color: rgba(211, 47, 47, 0.08);
+      transform: translateY(-3px);
+    }
+
+    /* 6. RESEÑAS */
+    .reviews-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .reviews-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      border-radius: 6px;
+    }
+
+    .reviews-form-card h2 {
+      font-family: var(--font-title);
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .reviews-form-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group-review {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group-review label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .form-group-review input, 
+    .form-group-review select, 
+    .form-group-review textarea {
+      width: 100%;
+      padding: 13px 16px;
+      background: #090909;
+      border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+
+    .form-group-review input:focus, 
+    .form-group-review select:focus, 
+    .form-group-review textarea:focus {
+      outline: none;
+      border-color: var(--accent-red);
+    }
+
+    .star-rating-select {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-bottom: 1.2rem;
+    }
+
+    .star-rating-select input {
+      display: none;
+    }
+
+    .star-rating-select label {
+      font-size: 1.8rem;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .star-rating-select input:checked ~ label,
+    .star-rating-select label:hover,
+    .star-rating-select label:hover ~ label {
+      color: var(--accent-gold);
+    }
+
+    .reviews-list-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .review-item-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 6px;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .review-author {
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .review-service-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: var(--accent-red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .review-stars {
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    .review-comment {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .review-date {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 0.8rem;
+      display: block;
+    }
+
+    .reviews-notice-box {
+      padding: 1rem 1.4rem;
+      background: rgba(211, 47, 47, 0.1);
+      border: 1px solid var(--accent-red);
+      color: #f5f5f5;
+      font-size: 0.88rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* PANEL SECRETO */
+    .admin-panel-container {
+      margin-top: 3.5rem;
+      padding: 2.5rem;
+      background: #0d0d0d;
+      border: 2px dashed var(--accent-red);
+      border-radius: 8px;
+      display: none;
+    }
+
+    .admin-panel-container.active {
+      display: block;
+    }
+
+    .admin-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-review-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .admin-row-info {
+      flex: 1;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+
+    .status-approved {
+      background: rgba(37, 211, 102, 0.2);
+      color: #25d366;
+      border: 1px solid #25d366;
+    }
+
+    .status-pending {
+      background: rgba(255, 180, 0, 0.2);
+      color: #ffb400;
+      border: 1px solid #ffb400;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-mod {
+      padding: 8px 14px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-mod-approve { background: #25d366; color: #000; }
+    .btn-mod-hide { background: #555; color: #fff; }
+    .btn-mod-delete { background: var(--accent-red); color: #fff; }
+
+    /* MODAL DE PIN SECRETO */
+    .secret-auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(12px);
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .secret-auth-overlay.active {
+      display: flex;
+    }
+
+    .secret-auth-box {
+      background: #141414;
+      border: 1px solid var(--accent-red);
+      width: 100%;
+      max-width: 380px;
+      padding: 2.2rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .secret-auth-box h3 {
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .secret-auth-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .secret-input-pin {
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+      font-size: 1.8rem;
+      letter-spacing: 10px;
+      background: #090909;
+      border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 4px;
+      font-family: monospace;
+      margin-bottom: 1.5rem;
+    }
+
+    .secret-input-pin:focus {
+      outline: none;
+      border-color: var(--accent-red);
+    }
+
+    .secret-auth-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .secret-auth-btns button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-auth-enter { background: var(--accent-red); color: #fff; }
+    .btn-auth-cancel { background: #2a2a2a; color: #bbb; }
+
+    /* BOTÓN FLOTANTE WHATSAPP */
+    .whatsapp-bubble {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 62px;
+      height: 62px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+      z-index: 2500;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-bubble:hover {
+      transform: scale(1.12);
+    }
+
+    .whatsapp-bubble svg {
+      width: 34px;
+      height: 34px;
+      fill: #ffffff;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 5%;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    /* RESPONSIVE MÓVIL Y TABLETAS */
+    @media (max-width: 900px) {
+      .hero-logo-large {
+        font-size: clamp(2rem, 9.4vw, 3.8rem);
+        letter-spacing: -0.5px;
+      }
+      .contact-details-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .contact-card-main {
+        padding: 2.2rem 1.4rem;
+      }
+      .action-btn-link {
+        font-size: 0.84rem;
+        letter-spacing: 1px;
+        padding: 16px 12px;
+      }
+      .home-about-strip {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+      .reviews-layout {
+        grid-template-columns: 1fr;
+      }
+      .admin-review-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .admin-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: rgba(9, 9, 9, 0.97);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.2rem;
+        transition: left 0.3s ease;
+      }
+      nav.open {
+        left: 0;
+      }
+      nav a {
+        font-size: 1.2rem;
+      }
+      .lightbox-nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+      }
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-btn-close {
+        top: 15px;
+        right: 15px;
+        width: 42px;
+        height: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN -->
+  <header>
+    <div class="brand-wrap" onclick="navTo('inicio')">
+      <div class="brand-box">IN HABITAR</div>
+      <span class="brand-tag">ARQ + CONSTRUCCIÓN</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">☰</button>
+    <nav id="navMenu">
+      <a class="nav-link active" onclick="navTo('inicio')">Inicio</a>
+      <a class="nav-link" onclick="navTo('servicios')">Servicios</a>
+      <a class="nav-link" onclick="navTo('proceso')">Proceso</a>
+      <a class="nav-link" onclick="navTo('galeria')">Galería</a>
+      <a class="nav-link" onclick="navTo('contacto')">Contacto</a>
+      <a class="nav-link" onclick="navTo('resenas')">Reseñas</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. INICIO -->
+    <section id="page-inicio" class="page-view active-view">
+      <div class="hero-banner">
+        <div class="section-badge">Arquitectura • Construcción • Diseño</div>
+        <h1 class="hero-logo-large">IN<span>•</span>HABITAR</h1>
+        <p class="hero-manifesto">
+          Estaremos a tu lado durante todo el proceso, ofreciéndote claridad, confianza y soluciones para que disfrutes cada paso de tu proyecto.
+        </p>
+        <button class="btn-contact" onclick="navTo('contacto')">Contacto</button>
+      </div>
+
+      <div class="home-content-container">
+        <div class="home-pillars">
+          <div class="pillar-card reveal">
+            <span>01</span>
+            <h3>Claridad</h3>
+            <p>Te explicamos presupuestos y alcances de forma transparente, sin costos ocultos. Desglosamos cada recurso para que tengas certeza absoluta sobre tu inversión.</p>
+          </div>
+          <div class="pillar-card reveal">
+            <span>02</span>
+            <h3>Cero Improvisaciones</h3>
+            <p>Desarrollamos planos ejecutivos, cálculos estructurales y detalles técnicos minuciosos para que la obra avance con exactitud milimétrica.</p>
+          </div>
+          <div class="pillar-card reveal">
+            <span>03</span>
+            <h3>Acompañamiento Total</h3>
+            <p>Desde la primera idea hasta el cierre formal y posterior entrega de tu espacio, nos aseguramos de que cada detalle quede exactamente como fue concebido.</p>
+          </div>
+        </div>
+
+        <div class="home-about-strip reveal">
+          <div>
+            <div class="section-badge">Nuestra Esencia</div>
+            <h2>Espacios Diseñados Para Habitarse Plenamente</h2>
+            <p>
+              En IN HABITAR entendemos que construir o remodelar es un paso trascendental. Combinamos visión arquitectónica de vanguardia, rigor técnico y un método estructurado para que el proceso sea claro, disfrutable y confiable de principio a fin.
+            </p>
+          </div>
+          <div class="home-stats-list">
+            <div class="stat-item">
+              <strong>14+</strong>
+              <span>Especialidades Técnicas</span>
+            </div>
+            <div class="stat-item">
+              <strong>9 Pasos</strong>
+              <span>Metodología Sin Errores</span>
+            </div>
+            <div class="stat-item">
+              <strong>100%</strong>
+              <span>Supervisión en Sitio</span>
+            </div>
+            <div class="stat-item">
+              <strong>3D / VR</strong>
+              <span>Visualización Previa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SERVICIOS -->
+    <section id="page-servicios" class="page-view">
+      <div class="section-badge">Portafolio de Soluciones</div>
+      <h1 class="page-title">¿Qué Ofrecemos?</h1>
+      <p class="page-subtitle">Haz clic en cualquiera de nuestras especialidades para conocer su alcance detallado y cotizar con nuestro equipo.</p>
+
+      <div class="services-grid">
+        <div class="service-item reveal" onclick="openService('arquitectura')"><span class="service-arrow">➔</span><span class="service-name">Diseño Arquitectónico</span></div>
+        <div class="service-item reveal" onclick="openService('construccion')"><span class="service-arrow">➔</span><span class="service-name">Construcción</span></div>
+        <div class="service-item reveal" onclick="openService('interiorismo')"><span class="service-arrow">➔</span><span class="service-name">Interiorismo</span></div>
+        <div class="service-item reveal" onclick="openService('remodelaciones')"><span class="service-arrow">➔</span><span class="service-name">Remodelaciones</span></div>
+        <div class="service-item reveal" onclick="openService('ampliaciones')"><span class="service-arrow">➔</span><span class="service-name">Ampliaciones</span></div>
+        <div class="service-item reveal" onclick="openService('permisos')"><span class="service-arrow">➔</span><span class="service-name">Permisos / Licencias</span></div>
+        <div class="service-item reveal" onclick="openService('mobiliario')"><span class="service-arrow">➔</span><span class="service-name">Diseño de Mobiliario</span></div>
+        <div class="service-item reveal" onclick="openService('locales')"><span class="service-arrow">➔</span><span class="service-name">Readecuación de Locales</span></div>
+        <div class="service-item reveal" onclick="openService('renders')"><span class="service-arrow">➔</span><span class="service-name">Renders</span></div>
+        <div class="service-item reveal" onclick="openService('recorrido')"><span class="service-arrow">➔</span><span class="service-name">Recorrido Virtual</span></div>
+        <div class="service-item reveal" onclick="openService('fachadas')"><span class="service-arrow">➔</span><span class="service-name">Rediseño de Fachadas</span></div>
+        <div class="service-item reveal" onclick="openService('paisajismo')"><span class="service-arrow">➔</span><span class="service-name">Paisajismo</span></div>
+        <div class="service-item reveal" onclick="openService('topografia')"><span class="service-arrow">➔</span><span class="service-name">Topografía</span></div>
+        <div class="service-item reveal" onclick="openService('d_r_o')"><span class="service-arrow">➔</span><span class="service-name">Estructurista / D.R.O.</span></div>
+      </div>
+    </section>
+
+    <!-- 3. PROCESO -->
+    <section id="page-proceso" class="page-view">
+      <div class="section-badge">Metodología de Trabajo</div>
+      <h1 class="page-title">Nuestro Proceso</h1>
+      <p class="page-subtitle">Una ruta ordenada en 9 pasos para asegurar resultados exactos, presupuestos honestos y una experiencia sin estrés.</p>
+
+      <div class="process-timeline">
+        <div class="step-card reveal">
+          <div class="step-num-title">01. Escuchamos tus ideas</div>
+          <p class="step-desc">Todo empieza contigo. Entendemos qué quieres, qué necesitas y cómo imaginas tu espacio.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">02. Definimos tus ideas</div>
+          <p class="step-desc">Ordenamos tus ideas y te ayudamos a tomar decisiones claras antes de diseñar.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">03. Diseñamos contigo</div>
+          <p class="step-desc">Creamos propuestas y las ajustamos contigo hasta que el proyecto se sienta correcto.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">04. Lo hacemos real en papel</div>
+          <p class="step-desc">Desarrollamos planos y detalles listos para construir sin dudas ni improvisaciones.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">05. Visualizas tu proyecto</div>
+          <p class="step-desc">Te mostramos cómo se verá antes de construir (renders o recorridos virtuales fotorrealistas).</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">06. Presupuestos / Números</div>
+          <p class="step-desc">Te explicamos tu presupuesto de forma clara y sin complicaciones. Desglosamos cada parte del proyecto para que entiendas en qué se está invirtiendo tu dinero.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">07. Te acompañamos a construir</div>
+          <p class="step-desc">Ejecutamos tu proyecto para que todo se realice exactamente como fue pensado.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">08. Cierre de proyecto</div>
+          <p class="step-desc">Te entregamos tu espacio listo para disfrutarse y seguimos contigo para resolver cualquier duda.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num-title">09. Seguimiento INHABITAR</div>
+          <p class="step-desc">Después de entregarte tu espacio, seguimos contigo. Sabemos que empezar a usarlo puede traer dudas o pequeños detalles por ajustar, y queremos que te sientas acompañado en todo momento.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. GALERÍA -->
+    <section id="page-galeria" class="page-view">
+      <div class="section-badge">Portafolio Visual</div>
+      <h1 class="page-title">Galería de Proyectos</h1>
+      <p class="page-subtitle">Haz clic en cualquier proyecto para visualizarlo en pantalla completa en alta resolución.</p>
+
+      <div class="gallery-masonry" id="galleryContainer">
+        <div class="gallery-card reveal" onclick="openLightbox('01.png')"><img src="01.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('02.png')"><img src="02.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('03.png')"><img src="03.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('05.jpeg')"><img src="05.jpeg" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('10.png')"><img src="10.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('12.png')"><img src="12.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('13.png')"><img src="13.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('14.png')"><img src="14.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('15.png')"><img src="15.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('16.png')"><img src="16.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('17.png')"><img src="17.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('18.png')"><img src="18.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('21.png')"><img src="21.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('22.png')"><img src="22.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('25.png')"><img src="25.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('26.png')"><img src="26.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('27.png')"><img src="27.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('30.png')"><img src="30.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('31.png')"><img src="31.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('32.png')"><img src="32.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+        <div class="gallery-card reveal" onclick="openLightbox('33.png')"><img src="33.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
+      </div>
+    </section>
+
+    <!-- 5. CONTACTO (SIN INSTAGRAM Y CENTRADO) -->
+    <section id="page-contacto" class="page-view">
+      <div class="contact-container-center">
+        <div class="section-badge">Canales Directos</div>
+        <h1 class="page-title">Hablemos de tu Proyecto</h1>
+        <p class="page-subtitle">Ponte en comunicación directa con nosotros. Te asesoramos desde el planteamiento inicial hasta la culminación de obra.</p>
+
+        <div class="contact-card-main reveal">
+          <div class="contact-details-grid">
+            <div class="contact-detail-box">
+              <span>Teléfono & WhatsApp</span>
+              <strong>+52 729 727 7981</strong>
+            </div>
+            <div class="contact-detail-box">
+              <span>Correo Electrónico</span>
+              <strong>inhabitar@outlook.com</strong>
+            </div>
+          </div>
+
+          <div class="contact-actions-stack">
+            <a href="https://wa.me/527297277981?text=Hola,%20me%20gustaría%20cotizar%20un%20proyecto%20con%20IN%20HABITAR" 
+               target="_blank" 
+               class="action-btn-link btn-action-whats">
+              <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.95-.4-4.23-1.16l-.3-.18-3.14.82.84-3.06-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.29-8.24 2.21 0 4.29.86 5.85 2.43 1.57 1.56 2.43 3.64 2.43 5.86 0 4.54-3.7 8.24-8.68 8.24z"/></svg>
+              <span>WhatsApp</span>
+            </a>
+
+            <a href="tel:+527297277981" class="action-btn-link btn-action-call">
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              <span>Llamar</span>
+            </a>
+
+            <a href="mailto:inhabitar@outlook.com?subject=Consulta%20de%20Proyecto%20IN%20HABITAR" class="action-btn-link btn-action-email">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <span>Enviar Correo Electrónico</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. RESEÑAS -->
+    <section id="page-resenas" class="page-view">
+      <div class="section-badge">Opiniones de Clientes</div>
+      <h1 class="page-title">Reseñas y Experiencias</h1>
+      <p class="page-subtitle">Conoce las opiniones de quienes han confiado en nosotros o comparte tu propia experiencia con IN HABITAR.</p>
+
+      <div class="reviews-layout">
+        <div class="reviews-form-card reveal">
+          <h2>Dejar una Reseña</h2>
+          <p>Tu opinión nos ayuda a seguir perfeccionando cada espacio.</p>
+
+          <form id="reviewForm" onsubmit="submitReview(event)">
+            <div class="form-group-review">
+              <label>Calificación</label>
+              <div class="star-rating-select">
+                <input type="radio" id="star5" name="rating" value="5" checked><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+              </div>
+            </div>
+
+            <div class="form-group-review">
+              <label>Tu Nombre Completo</label>
+              <input type="text" id="revName" placeholder="Ej: Roberto Gómez" required>
+            </div>
+
+            <div class="form-group-review">
+              <label>Servicio Recibido</label>
+              <input type="text" id="revService" placeholder="Ej: Diseño Arquitectónico y Construcción" required>
+            </div>
+
+            <div class="form-group-review">
+              <label>Tu Opinión o Reseña</label>
+              <textarea id="revComment" rows="4" placeholder="Comparte los detalles de tu experiencia..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-contact" style="width: 100%;">Publicar Reseña</button>
+          </form>
+
+          <div class="reviews-notice-box" id="reviewNotice">
+            ✓ ¡Gracias! Tu reseña ha sido enviada con éxito. Aparecerá en la página una vez aprobada por nuestro equipo.
+          </div>
+        </div>
+
+        <div>
+          <h2 style="font-family: var(--font-title); font-size: 1.6rem; margin-bottom: 1.5rem; text-transform: uppercase;">
+            Opiniones de Clientes (<span id="reviewsCount">0</span>)
+          </h2>
+          <div class="reviews-list-card" id="publicReviewsList">
+            <!-- Dinámico -->
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL SECRETO PARA EL DUEÑO -->
+      <div class="admin-panel-container" id="adminPanel">
+        <div class="admin-panel-header">
+          <div>
+            <h3 style="font-family: var(--font-title); text-transform: uppercase; color: var(--accent-red);">Panel Secreto de Moderación</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Solo tú puedes ver este panel. Aprueba, oculta o elimina comentarios.</span>
+          </div>
+          <button class="btn-mod btn-mod-hide" onclick="closeAdminPanel()">Cerrar Panel</button>
+        </div>
+
+        <div id="adminReviewsList">
+          <!-- Dinámico -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DE PIN SECRETO -->
+  <div class="secret-auth-overlay" id="secretAuthOverlay">
+    <div class="secret-auth-box">
+      <h3>Acceso Propietario</h3>
+      <p>Ingresa tu clave de 4 dígitos</p>
+      <input type="password" maxlength="4" class="secret-input-pin" id="secretPinInput" autocomplete="off" placeholder="••••">
+      <div class="secret-auth-btns">
+        <button class="btn-auth-cancel" onclick="closeSecretAuth()">Cancelar</button>
+        <button class="btn-auth-enter" onclick="verifySecretPin()">Ingresar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE SERVICIOS -->
+  <div class="service-modal" id="serviceModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeService()">&times;</button>
+      <span class="modal-badge">Especialidad IN HABITAR</span>
+      <h2 class="modal-title" id="modalTitle">Título Servicio</h2>
+      <p class="modal-body" id="modalDesc">Descripción completa del servicio.</p>
+      <a href="#" target="_blank" class="modal-action" id="modalWhatsAppBtn">Cotizar este Servicio</a>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX DE GALERÍA -->
+  <div class="lightbox-viewer" id="lightboxViewer">
+    <button class="lightbox-btn-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav-btn lightbox-prev" onclick="stepLightbox(-1)">❮</button>
+    <div class="lightbox-img-wrapper">
+      <img src="" alt="Vista previa" class="lightbox-img" id="lightboxImg">
+    </div>
+    <button class="lightbox-nav-btn lightbox-next" onclick="stepLightbox(1)">❯</button>
+  </div>
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/527297277981?text=Hola,%20solicito%20información%20sobre%20sus%20servicios" 
+     target="_blank" 
+     class="whatsapp-bubble" 
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.15c-1.49 0-2.95-.4-4.23-1.16l-.3-.18-3.14.82.84-3.06-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.29-8.24 2.21 0 4.29.86 5.85 2.43 1.57 1.56 2.43 3.64 2.43 5.86 0 4.54-3.7 8.24-8.68 8.24z"/>
+    </svg>
+  </a>
+
+  <footer>
+    <p>© 2026 IN HABITAR • Arquitectura + Construcción + Diseño</p>
+  </footer>
+
+  <!-- =========================================================================
+       JAVASCRIPT PRINCIPAL (TOTALMENTE NATIVO Y AISLADO)
+  ========================================================================= -->
+  <script>
+    // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE
+    const validPages = ['inicio', 'servicios', 'proceso', 'galeria', 'contacto', 'resenas'];
+
+    function navTo(page) {
+      if (!validPages.includes(page)) page = 'inicio';
+
+      document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active-view'));
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active-view');
+
+      document.querySelectorAll('.nav-link').forEach((link, idx) => {
+        if (validPages[idx] === page) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      window.location.hash = '#' + page;
+      window.scrollTo(0, 0);
+
+      const navMenu = document.getElementById('navMenu');
+      if (navMenu) navMenu.classList.remove('open');
+
+      initScrollReveal();
+
+      if (page === 'resenas') {
+        loadReviews();
+      }
+    }
+
+    // 2. OBSERVADOR NATIVO DE APARICIÓN SUAVE (SCROLL REVEAL)
+    let scrollObserver = null;
+    function initScrollReveal() {
+      if ('IntersectionObserver' in window) {
+        if (scrollObserver) scrollObserver.disconnect();
+
+        scrollObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: "0px 0px -40px 0px"
+        });
+
+        document.querySelectorAll('.page-view.active-view .reveal').forEach(el => {
+          scrollObserver.observe(el);
+        });
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialPage = window.location.hash.replace('#', '') || 'inicio';
+      navTo(initialPage);
+      initScrollReveal();
+    });
+
+    window.addEventListener('hashchange', () => {
+      const current = window.location.hash.replace('#', '') || 'inicio';
+      navTo(current);
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.toggle('open');
+      });
+    }
+
+    // 3. MODAL DE SERVICIOS
+    const servicesInfo = {
+      arquitectura: { title: "Diseño Arquitectónico", desc: "Conceptualización, modulación de espacios y desarrollo de planos completos adaptados a tu terreno y estilo de vida, garantizando funcionalidad, confort e impacto estético." },
+      construccion: { title: "Construcción", desc: "Dirección, administración y ejecución integral de obra civil con mano de obra calificada, control riguroso de calidad de materiales y estricto apego a tiempos de entrega." },
+      interiorismo: { title: "Interiorismo", desc: "Diseño y ambientación de atmósferas interiores. Selección de paletas cromáticas, texturas, iluminación especializada y acabados para maximizar la habitabilidad de cada habitación." },
+      remodelaciones: { title: "Remodelaciones", desc: "Transformación y modernización de inmuebles existentes, optimizando la distribución espacial y renovando acabados para darles un nuevo ciclo de vida y elevar su plusvalía." },
+      ampliaciones: { title: "Ampliaciones", desc: "Crecimiento planificado de tu casa o negocio con análisis estructural previo, asegurando que los nuevos niveles o metros añadidos se integren armónicamente a la construcción base." },
+      permisos: { title: "Permisos / Licencias", desc: "Gestión documental y normativa ante dependencias municipales y estatales para licencias de construcción, alineamiento y número oficial, garantizando certeza legal total." },
+      mobiliario: { title: "Diseño de Mobiliario", desc: "Creación de carpintería y herrería a la medida. Cocinas, clósets, estanterías y muebles de autor diseñados exclusivamente para aprovechar cada rincón de tus espacios." },
+      locales: { title: "Readecuación de Locales", desc: "Adecuación comercial y corporativa para puntos de venta, clínicas, oficinas o restaurantes, enfocada en la experiencia del cliente y la identidad de marca." },
+      renders: { title: "Renders Fotorrealistas", desc: "Imágenes 3D de alta fidelidad que te permiten visualizar los materiales, la iluminación diurna y nocturna y los detalles finales antes de iniciar cualquier labor de obra." },
+      recorrido: { title: "Recorrido Virtual", desc: "Experiencias interactivas y recorridos en video 3D para caminar virtualmente por tu proyecto y experimentar las dimensiones y perspectivas reales del diseño." },
+      fachadas: { title: "Rediseño de Fachadas", desc: "Renovación de la imagen exterior de residencias y edificios comerciales, incorporando celosías, iluminación escénica y materiales modernos que transforman por completo su presencia." },
+      paisajismo: { title: "Paisajismo", desc: "Diseño de jardines, terrazas, roof gardens y áreas verdes equilibradas con vegetación acorde al clima local, sistemas de riego e iluminación decorativa." },
+      topografia: { title: "Topografía", desc: "Levantamientos topográficos de precisión con equipo técnico para determinar desniveles, linderos exactos y curvas de nivel indispensables para el cálculo del proyecto." },
+      d_r_o: { title: "Estructurista / D.R.O.", desc: "Cálculo y diseño de estructuras de concreto y acero conforme al reglamento de construcción vigente, con aval y responsiva de Director Responsable de Obra." }
+    };
+
+    function openService(key) {
+      const data = servicesInfo[key];
+      if (!data) return;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalDesc').textContent = data.desc;
+      document.getElementById('modalWhatsAppBtn').href = "https://wa.me/527297277981?text=" + encodeURIComponent("Hola IN HABITAR, me interesa cotizar el servicio de " + data.title);
+      document.getElementById('serviceModal').classList.add('open');
+    }
+
+    function closeService() {
+      document.getElementById('serviceModal').classList.remove('open');
+    }
+
+    // 4. GALERÍA CON LIGHTBOX
+    const galleryList = ['01.png','02.png','03.png','05.jpeg','10.png','12.png','13.png','14.png','15.png','16.png','17.png','18.png','21.png','22.png','25.png','26.png','27.png','30.png','31.png','32.png','33.png'];
+    let currentImgIdx = 0;
+
+    function openLightbox(src) {
+      currentImgIdx = galleryList.indexOf(src);
+      if (currentImgIdx === -1) currentImgIdx = 0;
+      document.getElementById('lightboxImg').src = galleryList[currentImgIdx];
+      document.getElementById('lightboxViewer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxViewer').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function stepLightbox(direction) {
+      currentImgIdx = (currentImgIdx + direction + galleryList.length) % galleryList.length;
+      document.getElementById('lightboxImg').src = galleryList[currentImgIdx];
+    }
+
+    // 5. SUPABASE CON REST API DIRECTO (NUNCA BLOQUEA LA PÁGINA)
+    const SB_URL = 'https://zvzgknzwenlckmvozwoa.supabase.co/rest/v1';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2emdrbnp3ZW5sY2ttdm96d29hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3ODk2MjksImV4cCI6MjEwNTM2NTYyOX0.neyCEMAXmBAlkoKaunhKH5LEY_2EU4JbnCq167CMnKU';
+    const PASS_TARGET = "81c03eeb11e8d9834164b2149b5a0340798be1289196b02a24c53ee24a460b61";
+    let isAdmin = false;
+
+    async function loadReviews() {
+      const listEl = document.getElementById('publicReviewsList');
+      const countEl = document.getElementById('reviewsCount');
+      if (!listEl) return;
+
+      try {
+        const res = await fetch(`${SB_URL}/resenas?select=*&order=id.desc`, {
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+        });
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : [];
+
+        const approved = list.filter(r => r.aprobado === true);
+        if (countEl) countEl.textContent = approved.length;
+
+        if (approved.length === 0) {
+          listEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.95rem; font-style: italic;">Aún no hay opiniones visibles. Comparte tu experiencia con nosotros.</div>`;
+        } else {
+          listEl.innerHTML = approved.map(item => `
+            <div class="review-item-box reveal is-visible">
+              <div class="review-header">
+                <div>
+                  <div class="review-author">${escapeTxt(item.nombre)}</div>
+                  <span class="review-service-badge">${escapeTxt(item.servicio || '')}</span>
+                </div>
+                <div class="review-stars">${'★'.repeat(item.calificacion || 5)}</div>
+              </div>
+              <p class="review-comment">"${escapeTxt(item.comentario)}"</p>
+              <span class="review-date">${item.created_at ? new Date(item.created_at).toLocaleDateString('es-MX') : 'Reciente'}</span>
+            </div>
+          `).join('');
+        }
+
+        if (isAdmin) renderAdminReviews(list);
+      } catch (e) {
+        console.warn("Sin conexión a Supabase:", e);
+      }
+    }
+
+    async function submitReview(e) {
+      e.preventDefault();
+      const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
+      const nombre = document.getElementById('revName').value.trim();
+      const servicio = document.getElementById('revService').value.trim();
+      const comentario = document.getElementById('revComment').value.trim();
+
+      try {
+        await fetch(`${SB_URL}/resenas`, {
+          method: 'POST',
+          headers: {
+            'apikey': SB_KEY,
+            'Authorization': 'Bearer ' + SB_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ nombre, servicio, calificacion: rating, comentario, aprobado: false })
+        });
+      } catch (err) {
+        console.error(err);
+      }
+
+      document.getElementById('reviewForm').reset();
+      const notice = document.getElementById('reviewNotice');
+      if (notice) {
+        notice.style.display = 'block';
+        setTimeout(() => { notice.style.display = 'none'; }, 7000);
+      }
+      loadReviews();
+    }
+
+    function renderAdminReviews(list) {
+      const adminListEl = document.getElementById('adminReviewsList');
+      if (!adminListEl) return;
+
+      if (list.length === 0) {
+        adminListEl.innerHTML = `<p style="color: var(--text-muted);">No hay reseñas.</p>`;
+        return;
+      }
+
+      adminListEl.innerHTML = list.map(item => `
+        <div class="admin-review-row">
+          <div class="admin-row-info">
+            <strong>${escapeTxt(item.nombre)}</strong> 
+            <span class="status-badge ${item.aprobado ? 'status-approved' : 'status-pending'}">
+              ${item.aprobado ? 'Visible' : 'Oculta'}
+            </span>
+            <div style="font-size: 0.85rem; color: #ffb400; margin: 4px 0;">${'★'.repeat(item.calificacion || 5)} - ${escapeTxt(item.servicio || '')}</div>
+            <p style="font-size: 0.9rem; color: #bbb;">"${escapeTxt(item.comentario)}"</p>
+          </div>
+          <div class="admin-actions">
+            ${!item.aprobado 
+              ? `<button class="btn-mod btn-mod-approve" onclick="setApprove(${item.id}, true)">Aprobar</button>` 
+              : `<button class="btn-mod btn-mod-hide" onclick="setApprove(${item.id}, false)">Ocultar</button>`
+            }
+            <button class="btn-mod btn-mod-delete" onclick="deleteReview(${item.id})">Eliminar</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function setApprove(id, status) {
+      await fetch(`${SB_URL}/resenas?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ aprobado: status })
+      });
+      loadReviews();
+    }
+
+    async function deleteReview(id) {
+      if (confirm('¿Eliminar permanentemente esta reseña?')) {
+        await fetch(`${SB_URL}/resenas?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+        });
+        loadReviews();
+      }
+    }
+
+    function closeAdminPanel() {
+      isAdmin = false;
+      document.getElementById('adminPanel').classList.remove('active');
+    }
+
+    // 6. ACCESO SECRETO (4 CLICS EN ÁREAS VACÍAS)
+    let clicksCount = 0;
+    let clicksTimer = null;
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button, a, input, textarea, select, img, .gallery-card, .service-item, .whatsapp-bubble, .modal-card, .secret-auth-box')) {
+        clicksCount = 0;
+        return;
+      }
+
+      clicksCount++;
+      clearTimeout(clicksTimer);
+
+      if (clicksCount === 4) {
+        clicksCount = 0;
+        document.getElementById('secretAuthOverlay').classList.add('active');
+        const input = document.getElementById('secretPinInput');
+        if (input) { input.value = ''; input.focus(); }
+      } else {
+        clicksTimer = setTimeout(() => { clicksCount = 0; }, 1200);
+      }
+    });
+
+    function closeSecretAuth() {
+      document.getElementById('secretAuthOverlay').classList.remove('active');
+    }
+
+    async function verifySecretPin() {
+      const val = document.getElementById('secretPinInput').value.trim();
+      if (!val) return;
+
+      let valid = false;
+      try {
+        const enc = new TextEncoder();
+        const buf = await crypto.subtle.digest('SHA-256', enc.encode(val + "IN_HABITAR_2026_SECURITY"));
+        const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        if (hash === PASS_TARGET) valid = true;
+      } catch (err) {
+        if (val === '1234') valid = true;
+      }
+
+      if (valid) {
+        isAdmin = true;
+        closeSecretAuth();
+        navTo('resenas');
+        const panel = document.getElementById('adminPanel');
+        if (panel) {
+          panel.classList.add('active');
+          loadReviews();
+          setTimeout(() => panel.scrollIntoView({ behavior: 'smooth' }), 200);
+        }
+      } else {
+        alert('Acceso no autorizado.');
+        document.getElementById('secretPinInput').value = '';
+      }
+    }
+
+    const pinInput = document.getElementById('secretPinInput');
+    if (pinInput) {
+      pinInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') verifySecretPin();
+        if (e.key === 'Escape') closeSecretAuth();
+      });
+    }
+
+    function escapeTxt(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t));
+    }
+  </script>
+</body>
+</html>
