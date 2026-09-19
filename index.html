@@ -188,7 +188,7 @@
     }
 
     /* =========================================
-       1. INICIO (ADAPTADO A MÓVILES SIN CORTES)
+       1. INICIO (FONDO: ./fondo.jpeg)
     ========================================= */
     #page-inicio {
       max-width: 100%;
@@ -205,17 +205,17 @@
       align-items: center;
       text-align: center;
       padding: 60px 5%;
+      background-color: var(--bg-dark);
       background-image: 
         linear-gradient(180deg, rgba(9, 9, 9, 0.68) 0%, rgba(9, 9, 9, 0.82) 80%, var(--bg-dark) 100%),
-        url('04.png');
+        url('./fondo.jpeg');
       background-size: cover;
-      background-position: center;
+      background-position: center center;
       background-repeat: no-repeat;
     }
 
     .hero-logo-large {
       font-family: var(--font-title);
-      /* Tamaño escalable preciso para que no se corte en ningún teléfono */
       font-size: clamp(2.2rem, 9.4vw, 8.5rem);
       font-weight: 800;
       line-height: 1.05;
@@ -327,6 +327,7 @@
       grid-template-columns: 1.2fr 1fr;
       gap: 2.5rem;
       align-items: center;
+      margin-bottom: 70px;
     }
 
     .home-about-strip h2 {
@@ -366,6 +367,106 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 1px;
+    }
+
+    /* =========================================
+       TARJETAS DESTACADAS EN INICIO
+    ========================================= */
+    .featured-showcase-section {
+      margin-top: 50px;
+      margin-bottom: 60px;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .featured-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .featured-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-red);
+      box-shadow: 0 12px 35px rgba(211, 47, 47, 0.25);
+    }
+
+    .featured-image-box {
+      position: relative;
+      height: 380px;
+      width: 100%;
+      overflow: hidden;
+      background: #141414;
+    }
+
+    .featured-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+      filter: brightness(0.92) contrast(1.05);
+    }
+
+    .featured-card:hover .featured-image-box img {
+      transform: scale(1.06);
+      filter: brightness(1.05);
+    }
+
+    .featured-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(9, 9, 9, 0.95) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem 1.8rem;
+      z-index: 2;
+    }
+
+    .featured-tag {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--accent-red);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .featured-title {
+      font-family: var(--font-title);
+      font-size: 1.45rem;
+      line-height: 1.2;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .featured-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .featured-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      color: var(--accent-red);
     }
 
     /* 2. SERVICIOS */
@@ -541,74 +642,6 @@
       max-width: 900px;
     }
 
-    /* 4. GALERÍA */
-    .gallery-masonry {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .gallery-card {
-      position: relative;
-      height: 280px;
-      border-radius: 6px;
-      overflow: hidden;
-      cursor: pointer;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-    }
-
-    .gallery-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: var(--accent-red);
-    }
-
-    .gallery-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s ease;
-      filter: brightness(0.92) contrast(1.05);
-    }
-
-    .gallery-card:hover img {
-      transform: scale(1.08);
-      filter: brightness(1.05);
-    }
-
-    .gallery-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
-      opacity: 0;
-      display: flex;
-      align-items: flex-end;
-      padding: 1.2rem;
-      transition: opacity 0.3s ease;
-    }
-
-    .gallery-card:hover .gallery-overlay {
-      opacity: 1;
-    }
-
-    .overlay-text {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .overlay-text span {
-      color: var(--accent-red);
-    }
-
     /* Lightbox */
     .lightbox-viewer {
       position: fixed;
@@ -694,8 +727,21 @@
     .lightbox-prev { left: 20px; }
     .lightbox-next { right: 20px; }
 
+    .lightbox-counter {
+      position: absolute;
+      bottom: 24px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      z-index: 3010;
+    }
+
     /* =========================================
-       5. CONTACTO (SIN INSTAGRAM Y BOTONES CENTRADOS)
+       4. CONTACTO
     ========================================= */
     .contact-container-center {
       max-width: 780px;
@@ -813,7 +859,7 @@
       transform: translateY(-3px);
     }
 
-    /* 6. RESEÑAS */
+    /* 5. RESEÑAS */
     .reviews-layout {
       display: grid;
       grid-template-columns: 1fr 1.3fr;
@@ -1163,11 +1209,14 @@
       letter-spacing: 1px;
     }
 
-    /* RESPONSIVE MÓVIL Y TABLETAS */
+    /* RESPONSIVE MÓVIL */
     @media (max-width: 900px) {
       .hero-logo-large {
         font-size: clamp(2rem, 9.4vw, 3.8rem);
         letter-spacing: -0.5px;
+      }
+      .featured-image-box {
+        height: 300px;
       }
       .contact-details-grid {
         grid-template-columns: 1fr;
@@ -1248,14 +1297,15 @@
       <a class="nav-link active" onclick="navTo('inicio')">Inicio</a>
       <a class="nav-link" onclick="navTo('servicios')">Servicios</a>
       <a class="nav-link" onclick="navTo('proceso')">Proceso</a>
-      <a class="nav-link" onclick="navTo('galeria')">Galería</a>
       <a class="nav-link" onclick="navTo('contacto')">Contacto</a>
       <a class="nav-link" onclick="navTo('resenas')">Reseñas</a>
     </nav>
   </header>
 
   <main>
-    <!-- 1. INICIO -->
+    <!-- =========================================
+         1. INICIO (CON PROYECTOS CATEGORIZADOS EN .jpeg)
+    ========================================== -->
     <section id="page-inicio" class="page-view active-view">
       <div class="hero-banner">
         <div class="section-badge">Arquitectura • Construcción • Diseño</div>
@@ -1267,6 +1317,7 @@
       </div>
 
       <div class="home-content-container">
+        <!-- Pilares -->
         <div class="home-pillars">
           <div class="pillar-card reveal">
             <span>01</span>
@@ -1285,6 +1336,7 @@
           </div>
         </div>
 
+        <!-- Manifiesto de la firma -->
         <div class="home-about-strip reveal">
           <div>
             <div class="section-badge">Nuestra Esencia</div>
@@ -1312,6 +1364,59 @@
             </div>
           </div>
         </div>
+
+        <!-- PROYECTOS DESTACADOS EN INICIO (1 PORTADA POR CATEGORÍA EN .jpeg) -->
+        <div class="featured-showcase-section">
+          <div style="margin-bottom: 2.2rem; text-align: center;" class="reveal">
+            <div class="section-badge">Explora Nuestro Portafolio</div>
+            <h2 style="font-family: var(--font-title); font-size: 2.2rem; text-transform: uppercase;">Proyectos Destacados</h2>
+            <p style="color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto;">
+              Selecciona cualquier categoría para abrir el visor en alta resolución y recorrer la colección fotográfica completa.
+            </p>
+          </div>
+
+          <div class="featured-grid">
+            <!-- 1. ARQUITECTURA RESIDENCIAL (Portada: 20.jpeg) -->
+            <div class="featured-card reveal" onclick="openCategoryLightbox('exteriores', 0)">
+              <div class="featured-image-box">
+                <img src="./20.jpeg" alt="Arquitectura Residencial" loading="lazy">
+                <div class="featured-card-overlay">
+                  <span class="featured-tag">Fachadas & Volumetría</span>
+                  <h3 class="featured-title">Arquitectura Residencial</h3>
+                  <p class="featured-desc">Diseño volumétrico exterior, integración con el entorno y fachadas contemporáneas.</p>
+                  <span class="featured-cta">Ver Colección Completa ➔</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. INTERIORISMO Y ATMÓSFERAS (Portada: 19.jpeg) -->
+            <div class="featured-card reveal" onclick="openCategoryLightbox('interiores', 0)">
+              <div class="featured-image-box">
+                <img src="./19.jpeg" alt="Interiorismo y Atmósferas" loading="lazy">
+                <div class="featured-card-overlay">
+                  <span class="featured-tag">Espacios & Iluminación</span>
+                  <h3 class="featured-title">Interiorismo y Atmósferas</h3>
+                  <p class="featured-desc">Cocinas sobre diseño, dobles alturas y selección equilibrada de maderas y luz cálida.</p>
+                  <span class="featured-cta">Ver Colección Completa ➔</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. MODELADO 3D (Portada: 4.jpeg) -->
+            <div class="featured-card reveal" onclick="openCategoryLightbox('visualizacion', 0)">
+              <div class="featured-image-box">
+                <img src="./4.jpeg" alt="Modelado 3D" loading="lazy">
+                <div class="featured-card-overlay">
+                  <span class="featured-tag">Proyectos</span>
+                  <h3 class="featured-title">Modelado 3D</h3>
+                  <p class="featured-desc">Maquetación tridimensional y volumetría conceptual antes de construir.</p>
+                  <span class="featured-cta">Ver Colección Completa ➔</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1385,38 +1490,7 @@
       </div>
     </section>
 
-    <!-- 4. GALERÍA -->
-    <section id="page-galeria" class="page-view">
-      <div class="section-badge">Portafolio Visual</div>
-      <h1 class="page-title">Galería de Proyectos</h1>
-      <p class="page-subtitle">Haz clic en cualquier proyecto para visualizarlo en pantalla completa en alta resolución.</p>
-
-      <div class="gallery-masonry" id="galleryContainer">
-        <div class="gallery-card reveal" onclick="openLightbox('01.png')"><img src="01.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('02.png')"><img src="02.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('03.png')"><img src="03.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('05.jpeg')"><img src="05.jpeg" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('10.png')"><img src="10.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('12.png')"><img src="12.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('13.png')"><img src="13.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('14.png')"><img src="14.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('15.png')"><img src="15.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('16.png')"><img src="16.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('17.png')"><img src="17.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('18.png')"><img src="18.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('21.png')"><img src="21.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('22.png')"><img src="22.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('25.png')"><img src="25.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('26.png')"><img src="26.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('27.png')"><img src="27.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('30.png')"><img src="30.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('31.png')"><img src="31.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('32.png')"><img src="32.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-        <div class="gallery-card reveal" onclick="openLightbox('33.png')"><img src="33.png" alt="Proyecto Arquitectónico" loading="lazy"><div class="gallery-overlay"><span class="overlay-text">Ampliar <span>+</span></span></div></div>
-      </div>
-    </section>
-
-    <!-- 5. CONTACTO (SIN INSTAGRAM Y CENTRADO) -->
+    <!-- 4. CONTACTO -->
     <section id="page-contacto" class="page-view">
       <div class="contact-container-center">
         <div class="section-badge">Canales Directos</div>
@@ -1457,7 +1531,7 @@
       </div>
     </section>
 
-    <!-- 6. RESEÑAS -->
+    <!-- 5. RESEÑAS -->
     <section id="page-resenas" class="page-view">
       <div class="section-badge">Opiniones de Clientes</div>
       <h1 class="page-title">Reseñas y Experiencias</h1>
@@ -1554,7 +1628,7 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX DE GALERÍA -->
+  <!-- LIGHTBOX DE FOTOS -->
   <div class="lightbox-viewer" id="lightboxViewer">
     <button class="lightbox-btn-close" onclick="closeLightbox()">✕</button>
     <button class="lightbox-nav-btn lightbox-prev" onclick="stepLightbox(-1)">❮</button>
@@ -1562,6 +1636,7 @@
       <img src="" alt="Vista previa" class="lightbox-img" id="lightboxImg">
     </div>
     <button class="lightbox-nav-btn lightbox-next" onclick="stepLightbox(1)">❯</button>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
   </div>
 
   <!-- BOTÓN FLOTANTE WHATSAPP -->
@@ -1578,12 +1653,10 @@
     <p>© 2026 IN HABITAR • Arquitectura + Construcción + Diseño</p>
   </footer>
 
-  <!-- =========================================================================
-       JAVASCRIPT PRINCIPAL (TOTALMENTE NATIVO Y AISLADO)
-  ========================================================================= -->
+  <!-- JAVASCRIPT PRINCIPAL -->
   <script>
     // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE
-    const validPages = ['inicio', 'servicios', 'proceso', 'galeria', 'contacto', 'resenas'];
+    const validPages = ['inicio', 'servicios', 'proceso', 'contacto', 'resenas'];
 
     function navTo(page) {
       if (!validPages.includes(page)) page = 'inicio';
@@ -1613,7 +1686,7 @@
       }
     }
 
-    // 2. OBSERVADOR NATIVO DE APARICIÓN SUAVE (SCROLL REVEAL)
+    // 2. OBSERVADOR DE SCROLL
     let scrollObserver = null;
     function initScrollReveal() {
       if ('IntersectionObserver' in window) {
@@ -1688,16 +1761,31 @@
       document.getElementById('serviceModal').classList.remove('open');
     }
 
-    // 4. GALERÍA CON LIGHTBOX
-    const galleryList = ['01.png','02.png','03.png','05.jpeg','10.png','12.png','13.png','14.png','15.png','16.png','17.png','18.png','21.png','22.png','25.png','26.png','27.png','30.png','31.png','32.png','33.png'];
+    // 4. COLECCIONES FOTOGRÁFICAS EN .jpeg (EXACTAS SEGÚN TU CARPETA)
+    const photoCollections = {
+      // 13 Fotos de exteriores y fachadas
+      exteriores: ['20.jpeg','1.jpeg','2.jpeg','3.jpeg','5.jpeg','6.jpeg','7.jpeg','8.jpeg','13.jpeg','14.jpeg','15.jpeg','16.jpeg','17.jpeg'],
+      // 5 Fotos de diseño interior
+      interiores: ['19.jpeg','9.jpeg','10.jpeg','11.jpeg','18.jpeg'],
+      // 2 Fotos de modelado 3D
+      visualizacion: ['4.jpeg','12.jpeg']
+    };
+
+    let activeCollection = [];
     let currentImgIdx = 0;
 
-    function openLightbox(src) {
-      currentImgIdx = galleryList.indexOf(src);
-      if (currentImgIdx === -1) currentImgIdx = 0;
-      document.getElementById('lightboxImg').src = galleryList[currentImgIdx];
+    function openCategoryLightbox(catKey, startIdx) {
+      activeCollection = photoCollections[catKey] || photoCollections.exteriores;
+      currentImgIdx = startIdx || 0;
+      updateLightboxDisplay();
       document.getElementById('lightboxViewer').classList.add('active');
       document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxDisplay() {
+      if (activeCollection.length === 0) return;
+      document.getElementById('lightboxImg').src = './' + activeCollection[currentImgIdx];
+      document.getElementById('lightboxCounter').textContent = `${currentImgIdx + 1} / ${activeCollection.length}`;
     }
 
     function closeLightbox() {
@@ -1706,11 +1794,20 @@
     }
 
     function stepLightbox(direction) {
-      currentImgIdx = (currentImgIdx + direction + galleryList.length) % galleryList.length;
-      document.getElementById('lightboxImg').src = galleryList[currentImgIdx];
+      if (activeCollection.length === 0) return;
+      currentImgIdx = (currentImgIdx + direction + activeCollection.length) % activeCollection.length;
+      updateLightboxDisplay();
     }
 
-    // 5. SUPABASE CON REST API DIRECTO (NUNCA BLOQUEA LA PÁGINA)
+    window.addEventListener('keydown', (e) => {
+      const viewer = document.getElementById('lightboxViewer');
+      if (!viewer || !viewer.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') stepLightbox(1);
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+    });
+
+    // 5. SUPABASE CON REST API DIRECTO
     const SB_URL = 'https://zvzgknzwenlckmvozwoa.supabase.co/rest/v1';
     const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2emdrbnp3ZW5sY2ttdm96d29hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3ODk2MjksImV4cCI6MjEwNTM2NTYyOX0.neyCEMAXmBAlkoKaunhKH5LEY_2EU4JbnCq167CMnKU';
     const PASS_TARGET = "81c03eeb11e8d9834164b2149b5a0340798be1289196b02a24c53ee24a460b61";
@@ -1849,7 +1946,7 @@
     let clicksTimer = null;
 
     document.addEventListener('click', (e) => {
-      if (e.target.closest('button, a, input, textarea, select, img, .gallery-card, .service-item, .whatsapp-bubble, .modal-card, .secret-auth-box')) {
+      if (e.target.closest('button, a, input, textarea, select, img, .featured-card, .service-item, .whatsapp-bubble, .modal-card, .secret-auth-box')) {
         clicksCount = 0;
         return;
       }
