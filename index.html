@@ -77,7 +77,7 @@
       height: 100%;
     }
 
-    /* Logotipo ligeramente más grande, nítido y blanco puro */
+    /* Logotipo nítido y blanco puro */
     .brand-logo-img {
       height: 56px;
       max-width: 220px;
@@ -909,7 +909,9 @@
       transform: translateY(-3px);
     }
 
-    /* 6. RESEÑAS */
+    /* =========================================
+       6. RESEÑAS CON PAGINACIÓN ELEGANTE
+    ========================================= */
     .reviews-layout {
       display: grid;
       grid-template-columns: 1fr 1.3fr;
@@ -1006,6 +1008,12 @@
       border: 1px solid var(--border);
       padding: 2rem;
       border-radius: 6px;
+      animation: fadeInReview 0.4s ease forwards;
+    }
+
+    @keyframes fadeInReview {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .review-header {
@@ -1050,17 +1058,58 @@
     }
 
     .reviews-notice-box {
-      padding: 1rem 1.4rem;
-      background: rgba(211, 47, 47, 0.1);
-      border: 1px solid var(--accent-red);
+      padding: 1.1rem 1.4rem;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid #25d366;
       color: #f5f5f5;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       border-radius: 4px;
       margin-top: 1rem;
       display: none;
+      line-height: 1.5;
     }
 
-    /* PANEL SECRETO */
+    /* Botón Ver Más Reseñas */
+    .btn-load-more-reviews {
+      display: none;
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 14px 20px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-load-more-reviews:hover {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+      background: rgba(211, 47, 47, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* Badge sutil que solo aparece cuando hay reseñas reales (>0) */
+    .reviews-badge-counter {
+      display: none;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* PANEL DE MODERACIÓN */
     .admin-panel-container {
       margin-top: 3.5rem;
       padding: 2.5rem;
@@ -1266,8 +1315,8 @@
         letter-spacing: -0.5px;
       }
       .brand-logo-img {
-        height: 46px;
-        max-width: 170px;
+        height: 48px;
+        max-width: 180px;
       }
       .featured-image-box {
         height: 300px;
@@ -1346,7 +1395,7 @@
 </head>
 <body>
 
-  <!-- NAVEGACIÓN CON LOGOTIPO logo.png Y SECCIÓN NOSOTROS -->
+  <!-- NAVEGACIÓN -->
   <header>
     <div class="brand-wrap" onclick="navTo('inicio')">
       <img src="./logo.png" alt="IN HABITAR" class="brand-logo-img">
@@ -1481,7 +1530,7 @@
     </section>
 
     <!-- =========================================
-         2. SECCIÓN: NOSOTROS (DISEÑO EDITORIAL LIMPIO)
+         2. SECCIÓN: NOSOTROS
     ========================================== -->
     <section id="page-nosotros" class="page-view">
       <div style="text-align: center; margin-bottom: 2rem;" class="reveal">
@@ -1683,27 +1732,35 @@
             <button type="submit" class="btn-contact" style="width: 100%;">Publicar Reseña</button>
           </form>
 
+          <!-- Mensaje natural y formal sin mencionar filtro de aprobación -->
           <div class="reviews-notice-box" id="reviewNotice">
-            ✓ ¡Gracias! Tu reseña ha sido enviada con éxito. Aparecerá en la página una vez aprobada por nuestro equipo.
+            ✓ ¡Gracias por tu opinión! Tu reseña ha sido enviada con éxito y se reflejará en un momento.
           </div>
         </div>
 
         <div>
+          <!-- Título limpio sin ceros en paréntesis -->
           <h2 style="font-family: var(--font-title); font-size: 1.6rem; margin-bottom: 1.5rem; text-transform: uppercase;">
-            Opiniones de Clientes (<span id="reviewsCount">0</span>)
+            Opiniones de Clientes <span class="reviews-badge-counter" id="reviewsBadgeCounter"></span>
           </h2>
+          
           <div class="reviews-list-card" id="publicReviewsList">
             <!-- Dinámico -->
           </div>
+
+          <!-- Botón para paginar de 10 en 10 -->
+          <button class="btn-load-more-reviews" id="btnLoadMoreReviews" onclick="loadMoreReviews()">
+            Cargar más opiniones
+          </button>
         </div>
       </div>
 
-      <!-- PANEL SECRETO PARA EL DUEÑO -->
+      <!-- PANEL DE MODERACIÓN -->
       <div class="admin-panel-container" id="adminPanel">
         <div class="admin-panel-header">
           <div>
-            <h3 style="font-family: var(--font-title); text-transform: uppercase; color: var(--accent-red);">Panel Secreto de Moderación</h3>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Solo tú puedes ver este panel. Aprueba, oculta o elimina comentarios.</span>
+            <h3 style="font-family: var(--font-title); text-transform: uppercase; color: var(--accent-red);">Panel de Moderación</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Administra la visibilidad de las opiniones recibidas.</span>
           </div>
           <button class="btn-mod btn-mod-hide" onclick="closeAdminPanel()">Cerrar Panel</button>
         </div>
@@ -1766,7 +1823,7 @@
 
   <!-- JAVASCRIPT PRINCIPAL -->
   <script>
-    // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE (CON NOSOTROS)
+    // 1. NAVEGACIÓN TOTALMENTE INDEPENDIENTE
     const validPages = ['inicio', 'nosotros', 'servicios', 'proceso', 'contacto', 'resenas'];
 
     function navTo(page) {
@@ -1915,14 +1972,18 @@
       if (e.key === 'ArrowLeft') stepLightbox(-1);
     });
 
-    // 5. SUPABASE CON REST API DIRECTO
+    // 5. SUPABASE REST API & PAGINACIÓN DE 10 EN 10
     const SB_URL = 'https://zvzgknzwenlckmvozwoa.supabase.co/rest/v1';
     const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2emdrbnp3ZW5sY2ttdm96d29hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3ODk2MjksImV4cCI6MjEwNTM2NTYyOX0.neyCEMAXmBAlkoKaunhKH5LEY_2EU4JbnCq167CMnKU';
     let isAdmin = false;
 
+    let allApprovedReviews = [];
+    let reviewsVisibleLimit = 10;
+
     async function loadReviews() {
       const listEl = document.getElementById('publicReviewsList');
-      const countEl = document.getElementById('reviewsCount');
+      const badgeEl = document.getElementById('reviewsBadgeCounter');
+      const btnLoadMore = document.getElementById('btnLoadMoreReviews');
       if (!listEl) return;
 
       try {
@@ -1932,31 +1993,67 @@
         const data = await res.json();
         const list = Array.isArray(data) ? data : [];
 
-        const approved = list.filter(r => r.aprobado === true);
-        if (countEl) countEl.textContent = approved.length;
+        // Filtrar solo las aprobadas
+        allApprovedReviews = list.filter(r => r.aprobado === true);
 
-        if (approved.length === 0) {
-          listEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.95rem; font-style: italic;">Aún no hay opiniones visibles. Comparte tu experiencia con nosotros.</div>`;
+        // Si no hay opiniones aprobadas, dejar limpio sin contadores ni la palabra "visibles"
+        if (allApprovedReviews.length === 0) {
+          if (badgeEl) badgeEl.style.display = 'none';
+          listEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.95rem; font-style: italic;">Aún no hay opiniones. Comparte tu experiencia con nosotros.</div>`;
+          if (btnLoadMore) btnLoadMore.style.display = 'none';
         } else {
-          listEl.innerHTML = approved.map(item => `
-            <div class="review-item-box reveal is-visible">
-              <div class="review-header">
-                <div>
-                  <div class="review-author">${escapeTxt(item.nombre)}</div>
-                  <span class="review-service-badge">${escapeTxt(item.servicio || '')}</span>
-                </div>
-                <div class="review-stars">${'★'.repeat(item.calificacion || 5)}</div>
-              </div>
-              <p class="review-comment">"${escapeTxt(item.comentario)}"</p>
-              <span class="review-date">${item.created_at ? new Date(item.created_at).toLocaleDateString('es-MX') : 'Reciente'}</span>
-            </div>
-          `).join('');
+          // Si hay más de 0, mostrar conteo discreto
+          if (badgeEl) {
+            badgeEl.textContent = `${allApprovedReviews.length} total`;
+            badgeEl.style.display = 'inline-block';
+          }
+          // Resetear límite a 10 y renderizar
+          reviewsVisibleLimit = 10;
+          renderPagedReviews();
         }
 
         if (isAdmin) renderAdminReviews(list);
       } catch (e) {
         console.warn("Sin conexión a Supabase:", e);
       }
+    }
+
+    function renderPagedReviews() {
+      const listEl = document.getElementById('publicReviewsList');
+      const btnLoadMore = document.getElementById('btnLoadMoreReviews');
+      if (!listEl) return;
+
+      const itemsToDisplay = allApprovedReviews.slice(0, reviewsVisibleLimit);
+
+      listEl.innerHTML = itemsToDisplay.map(item => `
+        <div class="review-item-box">
+          <div class="review-header">
+            <div>
+              <div class="review-author">${escapeTxt(item.nombre)}</div>
+              <span class="review-service-badge">${escapeTxt(item.servicio || '')}</span>
+            </div>
+            <div class="review-stars">${'★'.repeat(item.calificacion || 5)}</div>
+          </div>
+          <p class="review-comment">"${escapeTxt(item.comentario)}"</p>
+          <span class="review-date">${item.created_at ? new Date(item.created_at).toLocaleDateString('es-MX') : 'Reciente'}</span>
+        </div>
+      `).join('');
+
+      // Mostrar botón solo si quedan más reseñas por cargar
+      if (btnLoadMore) {
+        if (allApprovedReviews.length > reviewsVisibleLimit) {
+          btnLoadMore.style.display = 'block';
+          const remaining = allApprovedReviews.length - reviewsVisibleLimit;
+          btnLoadMore.textContent = `Cargar más opiniones (${remaining > 10 ? 10 : remaining})`;
+        } else {
+          btnLoadMore.style.display = 'none';
+        }
+      }
+    }
+
+    function loadMoreReviews() {
+      reviewsVisibleLimit += 10;
+      renderPagedReviews();
     }
 
     async function submitReview(e) {
@@ -2048,7 +2145,7 @@
       document.getElementById('adminPanel').classList.remove('active');
     }
 
-    // 6. ACCESO SECRETO (4 CLICS EN ÁREAS VACÍAS)
+    // 6. ACCESO DIRECTO CON PIN: 2508 (4 CLICS EN ÁREAS VACÍAS)
     let clicksCount = 0;
     let clicksTimer = null;
 
@@ -2075,7 +2172,6 @@
       document.getElementById('secretAuthOverlay').classList.remove('active');
     }
 
-    // VERIFICACIÓN DIRECTA Y SEGURA DEL PIN 2508
     function verifySecretPin() {
       const val = document.getElementById('secretPinInput').value.trim();
       if (!val) return;
